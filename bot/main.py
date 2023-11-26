@@ -5,9 +5,9 @@ from aiogram.filters.chat_member_updated import JOIN_TRANSITION
 
 import asyncio
 
-from config import *
-from filters import *
-from handlers import *
+from config import bot, dp, private_rt, group_rt, channel_rt
+from filters import PrivateRouterFilter, GroupRouterFilter, ChannelRouterFilter
+from handlers import welcome
 
 
 private_rt.message.filter(PrivateRouterFilter())
@@ -25,7 +25,7 @@ channel_rt.chat_member.filter(ChannelRouterFilter())
 dp.include_routers(group_rt, private_rt, channel_rt)
 
 
-@group_rt.chat_member.register(welcome, ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION))
+group_rt.chat_member.register(welcome, ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION))
 
 
 async def start():
