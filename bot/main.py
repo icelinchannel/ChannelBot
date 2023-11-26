@@ -18,6 +18,7 @@ privat_rt.message.filter(F.chat.type == 'privat')
 community_rt.message.filter(F.chat.type == 'group')
 community_rt.chat_member.filter(F.chat.type == 'group')
 
+
 @community_rt.chat_member(ChatMemberUpdatedFilter(JOIN_TRANSITION))
 async def welcome(event: types.ChatMemberUpdated):
     return event.reply_photo(photo='images/hello.jpg', caption='''Добро пожаловать в чат👋👋👋
