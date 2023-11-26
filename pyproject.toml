@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.11"
 aiogram = "^3.2.0"
 python-dotenv = "^1.0.0"
+flake8 = "^6.1.0"
 
 
 [build-system]
