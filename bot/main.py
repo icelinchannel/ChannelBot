@@ -7,7 +7,7 @@ from aiogram.filters.chat_member_updated import JOIN_TRANSITION
 
 import asyncio
 
-from config import API_TOKEN, WELCOME_IMAGE_LINK, CHAT_ID, CHANNEL_ID
+from config import WELCOME_IMAGE_LINK, API_TOKEN, CHANNEL_ID, GROUP_ID
 
 
 bot = Bot(API_TOKEN)
@@ -19,7 +19,7 @@ channel_rt = Router()
 
 
 private_rt.message.filter(F.chat.type == ChatType.PRIVATE)
-group_rt.message.filter(F.chat.id == CHAT_ID)
+group_rt.message.filter(F.chat.id == GROUP_ID)
 channel_rt.message.filter(F.chat.id == CHANNEL_ID)
 
 private_rt.channel_post.filter(False)
@@ -27,7 +27,7 @@ group_rt.channel_post.filter(False)
 channel_rt.channel_post.filter(True)
 
 private_rt.chat_member.filter(F.chat.type == ChatType.PRIVATE)
-group_rt.chat_member.filter(F.chat.id == CHAT_ID)
+group_rt.chat_member.filter(F.chat.id == GROUP_ID)
 channel_rt.chat_member.filter(F.chat.type == ChatType.CHANNEL)
 
 dp.include_routers(group_rt, private_rt, channel_rt)
@@ -58,7 +58,7 @@ async def welcome(event: types.ChatMemberUpdated):
     )
 
     else:
-        bot.ban_chat_member(chat_id=CHAT_ID, revoke_messages=True, user_id=event.from_user.id)
+        bot.ban_chat_member(chat_id=GROUP_ID, revoke_messages=True, user_id=event.from_user.id)
 
 
 async def start():
