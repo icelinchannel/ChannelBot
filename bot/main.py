@@ -7,28 +7,30 @@ from aiogram.filters.chat_member_updated import JOIN_TRANSITION
 
 import asyncio
 
-from config import WELCOME_IMAGE_LINK, API_TOKEN, CHANNEL_ID, GROUP_ID
+import config
+import filters
+import handlers
 
 
-bot = Bot(API_TOKEN)
+bot = Bot(config.API_TOKEN)
 dp = Dispatcher()
+
 
 private_rt = Router()
 group_rt = Router()
 channel_rt = Router()
 
-
-private_rt.message.filter(F.chat.type == ChatType.PRIVATE)
-group_rt.message.filter(F.chat.id == GROUP_ID)
-channel_rt.message.filter(F.chat.id == CHANNEL_ID)
+private_rt.message.filter(filters.PrivateRouterFilter)
+group_rt.message.filter(filters.GroupRouterFilter)
+channel_rt.message.filter(filters.ChannelRouterFilter)
 
 private_rt.channel_post.filter(False)
 group_rt.channel_post.filter(False)
 channel_rt.channel_post.filter(True)
 
-private_rt.chat_member.filter(F.chat.type == ChatType.PRIVATE)
-group_rt.chat_member.filter(F.chat.id == GROUP_ID)
-channel_rt.chat_member.filter(F.chat.type == ChatType.CHANNEL)
+private_rt.chat_member.filter(filters.PrivateRouterFilter)
+group_rt.chat_member.filter(filters.GroupRouterFilter)
+channel_rt.chat_member.filter(filters.ChannelRouterFilter)
 
 dp.include_routers(group_rt, private_rt, channel_rt)
 
@@ -38,7 +40,7 @@ async def welcome(event: types.ChatMemberUpdated):
 
     if event.from_user.username[-3:] != 'bot':
         await event.answer_photo(
-            photo=WELCOME_IMAGE_LINK,
+            photo=config.WELCOME_IMAGE_LINK,
             caption=f'''🔴Привет, [{event.from_user.full_name}](https://t.me/{event.from_user.username})👋👋👋
 
 Добро пожаловать в чат\. У нас тут правила, всё как везде:
@@ -58,7 +60,7 @@ async def welcome(event: types.ChatMemberUpdated):
     )
 
     else:
-        bot.ban_chat_member(chat_id=GROUP_ID, revoke_messages=True, user_id=event.from_user.id)
+        bot.ban_chat_member(chat_id=config.GROUP_ID, revoke_messages=True, user_id=event.from_user.id)
 
 
 async def start():
