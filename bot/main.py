@@ -11,12 +11,14 @@ from config import API_TOKEN
 bot = Bot(API_TOKEN)
 dp = Dispatcher()
 
-privat_rt = Router()
+private_rt = Router()
 community_rt = Router()
 
-privat_rt.message.filter(F.chat.type == 'privat')
+private_rt.message.filter(F.chat.type == 'privat')
 community_rt.message.filter(F.chat.type == 'group')
 community_rt.chat_member.filter(F.chat.type == 'group')
+
+dp.include_routers(community_rt, private_rt)
 
 
 @community_rt.chat_member(ChatMemberUpdatedFilter(JOIN_TRANSITION))
@@ -35,3 +37,11 @@ async def welcome(event: types.ChatMemberUpdated):
 👉 Мы оставляем за собой право удалять любые сообщения и пользователей из группы
 
 ❗️ Занудство закончилось, можно писать)''')
+
+
+async def start():
+    await dp.start_polling(bot)
+
+
+if __name__ == '__main__':
+    asyncio.run(start())
