@@ -7,7 +7,7 @@ import asyncio
 
 from config import *
 from filters import *
-import handlers
+from handlers import *
 
 
 private_rt.message.filter(PrivateRouterFilter())
@@ -25,7 +25,7 @@ channel_rt.chat_member.filter(ChannelRouterFilter())
 dp.include_routers(group_rt, private_rt, channel_rt)
 
 
-@group_rt.chat_member.register(handlers.welcome, ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION))
+@group_rt.chat_member.register(welcome, ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION))
 
 
 async def start():
