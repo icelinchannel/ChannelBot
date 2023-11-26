@@ -17,3 +17,4 @@ community_rt = Router()
 
 privat_rt.message.filter(F.chat.type == 'privat')
 community_rt.message.filter(F.chat.type == 'group')
+community_rt.chat_member.filter(F.chat.type == 'group')
