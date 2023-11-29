@@ -1,4 +1,4 @@
-from aiogram import Bot, Dispatcher, F, Router, types
+from aiogram import Bot, Dispatcher, F
 
 from aiogram.enums.chat_type import ChatType
 
