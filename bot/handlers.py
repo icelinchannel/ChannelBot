@@ -1,7 +1,6 @@
 from aiogram import types
 
-from config import bot, WELCOME_IMAGE_LINK, GROUP_ID, CHANNEL_ID
-import filters
+from config import bot, WELCOME_IMAGE_LINK, GROUP_ID
 
 
 async def welcome(event: types.ChatMemberUpdated):
