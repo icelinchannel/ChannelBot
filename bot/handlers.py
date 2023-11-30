@@ -5,10 +5,14 @@ from config import bot, WELCOME_IMAGE_LINK, GROUP_ID
 
 async def welcome(event: types.ChatMemberUpdated):
 
-    if event.from_user.username[-3:] != 'bot':
+    if event.new_chat_member.user.is_bot is True: # JUST FOR TESTING, CHANGE TO FALSE WHEN READY
+
+        name_with_link = f'[{event.new_chat_member.user.full_name}]({event.new_chat_member.user.username})'
+        name_without_link = event.new_chat_member.user.full_name
+
         await event.answer_photo(
             photo=WELCOME_IMAGE_LINK,
-            caption=f'''🔴Привет, [{event.from_user.full_name}](https://t.me/{event.from_user.username})👋👋👋
+            caption=f'''🔴Привет, {name_without_link if type(event.new_chat_member.user.username) is None else name_with_link}👋👋👋
 
 Добро пожаловать в чат\. У нас тут правила, всё как везде:
 
@@ -27,7 +31,8 @@ async def welcome(event: types.ChatMemberUpdated):
         )
 
     else:
-        await bot.ban_chat_member(chat_id=GROUP_ID, revoke_messages=True, user_id=event.from_user.id)
+        await event.answer('Ботам не место в чате!')
+        await bot.ban_chat_member(chat_id=GROUP_ID, revoke_messages=True, user_id=event.new_chat_member.user.id)
 
 
 async def bot_added_to_another_group(event: types.ChatMemberUpdated):
