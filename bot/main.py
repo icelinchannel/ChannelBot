@@ -1,4 +1,4 @@
-from aiogram import Bot, Dispatcher, F
+from aiogram import F
 
 from aiogram.enums.chat_type import ChatType
 
@@ -8,7 +8,8 @@ from aiogram.filters.chat_member_updated import JOIN_TRANSITION
 import asyncio
 
 from config import bot, dp, private_rt, group_rt, channel_rt, CHANNEL_ID, GROUP_ID
-from handlers import welcome
+from handlers import welcome, bot_added_to_another_group
+from filters import IsItBotFilter
 
 
 private_rt.message.filter(F.chat.type == ChatType.PRIVATE)
@@ -27,6 +28,12 @@ dp.include_routers(group_rt, private_rt, channel_rt)
 
 
 group_rt.chat_member.register(welcome, ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION))
+dp.chat_member.register(
+    bot_added_to_another_group,
+    ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION),
+    IsItBotFilter(),
+    F.chat.type == ChatType.SUPERGROUP
+)
 
 
 async def start():
