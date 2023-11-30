@@ -29,3 +29,8 @@ async def welcome(event: types.ChatMemberUpdated):
 
     else:
         await bot.ban_chat_member(chat_id=GROUP_ID, revoke_messages=True, user_id=event.from_user.id)
+
+
+async def bot_added_to_another_group(event: types.ChatMemberUpdated):
+    await event.answer('Стоооп... Я создан не для этого чата, до свидания')
+    await bot.leave_chat(chat_id=event.chat.id)
