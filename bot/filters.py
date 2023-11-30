@@ -1,7 +1,6 @@
 from aiogram import F, types
 
 from aiogram.filters.base import Filter
-
 from aiogram.enums.chat_type import ChatType
 
 from config import CHANNEL_ID, GROUP_ID, bot
@@ -18,13 +17,8 @@ class ChannelRouterFilter(Filter):
 
 
 class PrivateRouterFilter(Filter):
-
-    async def __init__(self, user_id):
-        self.user_id = user_id
-
-    async def __call__(self):
-        member = await bot.get_chat_member(chat_id=CHANNEL_ID, user_id=self.user_id)
-        return member.is_member
+    async def __call__(self, message):
+        return F.chat.type == ChatType.PRIVATE
 
 
 class IsItBotFilter(Filter):
