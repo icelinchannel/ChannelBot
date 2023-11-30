@@ -6,6 +6,16 @@ from aiogram import F
 from config import CHANNEL_ID, GROUP_ID, bot
 
 
+class GroupRouterFilter(Filter):
+    async def __call__(self, message):
+        return F.chat.id == GROUP_ID
+
+
+class ChannelRouterFilter(Filter):
+    async def __call__(self, message):
+        return F.chat.id == CHANNEL_ID
+
+
 class IsItBotFilter(Filter):
     async def __call__(self, event):
         bot_obj = await bot.get_me()
