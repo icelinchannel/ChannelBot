@@ -32,7 +32,8 @@ dp.chat_member.register(
     bot_added_to_another_group,
     ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION),
     IsItBotFilter(),
-    F.chat.type == ChatType.SUPERGROUP
+    F.chat.type == ChatType.SUPERGROUP,
+    F.chat.id != GROUP_ID
 )
 
 
