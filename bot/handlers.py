@@ -5,7 +5,7 @@ from config import bot, WELCOME_IMAGE_LINK, GROUP_ID
 
 async def welcome(event: types.ChatMemberUpdated):
 
-    if event.new_chat_member.user.is_bot is True: # JUST FOR TESTING, CHANGE TO FALSE WHEN READY
+    if True: # JUST FOR TESTING, CHANGE TO "event.new_chat_member.user.is_bot is False" WHEN READY
 
         name_with_link = f'[{event.new_chat_member.user.full_name}]({event.new_chat_member.user.username})'
         name_without_link = event.new_chat_member.user.full_name
@@ -38,3 +38,7 @@ async def welcome(event: types.ChatMemberUpdated):
 async def bot_added_to_another_group(event: types.ChatMemberUpdated):
     await event.answer('Стоооп... Я создан не для этого чата, до свидания')
     await bot.leave_chat(chat_id=event.chat.id)
+
+
+async def start(command_message: types.Message):
+    await command_message.reply('''Приветик👋👋''')
