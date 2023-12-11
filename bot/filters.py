@@ -21,6 +21,6 @@ class PrivateRouterFilter(Filter):
         return F.chat.type == ChatType.PRIVATE
 
 
-class IsItBotFilter(Filter):
+class IsItThisBotFilter(Filter):
     async def __call__(self, event: types.ChatMemberUpdated):
         return event.new_chat_member.user.id == bot.id

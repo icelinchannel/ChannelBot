@@ -10,7 +10,7 @@ import asyncio
 
 from config import bot, dp, private_rt, group_rt, channel_rt, CHANNEL_ID, GROUP_ID
 from handlers import welcome, bot_added_to_another_group, start
-from filters import IsItBotFilter, PrivateRouterFilter, GroupRouterFilter, ChannelRouterFilter
+from filters import IsItThisBotFilter, PrivateRouterFilter, GroupRouterFilter, ChannelRouterFilter
 
 
 private_rt.message.filter(PrivateRouterFilter())
@@ -32,7 +32,7 @@ group_rt.chat_member.register(welcome, ChatMemberUpdatedFilter(member_status_cha
 dp.chat_member.register(
     bot_added_to_another_group,
     ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION),
-    IsItBotFilter(),
+    IsItThisBotFilter(),
     F.chat.type == ChatType.SUPERGROUP,
     F.chat.id != GROUP_ID
 )

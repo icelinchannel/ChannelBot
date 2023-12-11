@@ -5,7 +5,7 @@ from config import bot, WELCOME_IMAGE_LINK, GROUP_ID
 
 async def welcome(event: types.ChatMemberUpdated):
 
-    if True: # JUST FOR TESTING, CHANGE TO "event.new_chat_member.user.is_bot is False" WHEN READY
+    if True: # JUST FOR TESTING, CHANGE TO "if event.new_chat_member.user.is_bot is False" WHEN READY
 
         name_with_link = f'[{event.new_chat_member.user.full_name}]({event.new_chat_member.user.username})'
         name_without_link = event.new_chat_member.user.full_name
