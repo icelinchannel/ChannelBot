@@ -9,6 +9,5 @@ update:
 
 start:
 	poetry update package
-	cd bot
 	clear
-	poetry run python main.py
+	poetry run python bot/main.py
