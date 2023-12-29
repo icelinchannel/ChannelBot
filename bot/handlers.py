@@ -5,7 +5,7 @@ from config import bot, WELCOME_IMAGE_LINK, GROUP_ID
 
 async def welcome(event: types.ChatMemberUpdated):
 
-    if True: # JUST FOR TESTING, CHANGE TO "if event.new_chat_member.user.is_bot is False" WHEN READY
+    if event.new_chat_member.user.is_bot is False:
 
         name_with_link = f'[{event.new_chat_member.user.full_name}]({event.new_chat_member.user.username})'
         name_without_link = event.new_chat_member.user.full_name
@@ -32,7 +32,7 @@ async def welcome(event: types.ChatMemberUpdated):
 
     else:
         await event.answer('Ботам не место в чате!')
-        await bot.ban_chat_member(chat_id=GROUP_ID, revoke_messages=True, user_id=event.new_chat_member.user.id)
+        await bot.ban_chat_member(revoke_messages=True, chat_id=event.chat.id, user_id=event.new_chat_member.user.id)
 
 
 async def bot_added_to_another_group(event: types.ChatMemberUpdated):
