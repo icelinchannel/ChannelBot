@@ -9,7 +9,7 @@ from aiogram.filters.chat_member_updated import JOIN_TRANSITION
 import asyncio
 
 from config import bot, dp, private_rt, group_rt, channel_rt, CHANNEL_ID, GROUP_ID
-from handlers import welcome, bot_added_to_another_group, start
+from handlers import welcome
 from filters import IsItThisBotFilter, PrivateRouterFilter, GroupRouterFilter, ChannelRouterFilter
 
 
