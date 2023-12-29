@@ -33,12 +33,3 @@ async def welcome(event: types.ChatMemberUpdated):
     else:
         await event.answer('Ботам не место в чате!')
         await bot.ban_chat_member(revoke_messages=True, chat_id=event.chat.id, user_id=event.new_chat_member.user.id)
-
-
-async def bot_added_to_another_group(event: types.ChatMemberUpdated):
-    await event.answer('Стоооп... Я создан не для этого чата, до свидания')
-    await bot.leave_chat(chat_id=event.chat.id)
-
-
-async def start(command_message: types.Message):
-    await command_message.reply('''Приветик👋👋''')

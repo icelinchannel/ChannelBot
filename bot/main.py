@@ -29,14 +29,6 @@ dp.include_routers(group_rt, private_rt, channel_rt)
 
 
 group_rt.chat_member.register(welcome, ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION))
-dp.chat_member.register(
-    bot_added_to_another_group,
-    ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION),
-    IsItThisBotFilter(),
-    F.chat.type == ChatType.SUPERGROUP,
-    F.chat.id != GROUP_ID
-)
-private_rt.message.register(start, Command('start'))
 
 
 async def start():
