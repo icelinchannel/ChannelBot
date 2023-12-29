@@ -1,5 +1,6 @@
 install:
 	pip install poetry
+	clear
 	poetry install
 
 update:
