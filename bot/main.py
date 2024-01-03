@@ -28,8 +28,8 @@ channel_rt.chat_member.filter(ChannelRouterFilter())
 dp.include_routers(group_rt, private_rt, channel_rt)
 
 
-@group_rt.chat_member.register(welcome, ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION))
-@private_rt.message.register(start_private, Command('start'))
+group_rt.chat_member.register(welcome, ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION))
+private_rt.message.register(start_private, Command('start'))
 
 
 
