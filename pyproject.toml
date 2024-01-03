@@ -7,9 +7,9 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-aiogram = "^3.2.0"
 python-dotenv = "^1.0.0"
 flake8 = "^6.1.0"
+aiogram = "^3.3.0"
 
 
 [build-system]
