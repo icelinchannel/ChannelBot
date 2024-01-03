@@ -8,7 +8,8 @@ from aiogram.filters.chat_member_updated import JOIN_TRANSITION
 
 import asyncio
 
-from config import bot, dp, private_rt, group_rt, channel_rt, CHANNEL_ID, GROUP_ID, WELCOME_IMAGE_LINK
+from config import bot, dp, private_rt, group_rt, channel_rt
+from handlers import welcome, start_private
 from filters import PrivateRouterFilter, GroupRouterFilter, ChannelRouterFilter
 
 
@@ -27,9 +28,8 @@ channel_rt.chat_member.filter(ChannelRouterFilter())
 dp.include_routers(group_rt, private_rt, channel_rt)
 
 
-@group_rt.chat_member(ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION))
-
-@private_rt.message(Command('start'))
+@group_rt.chat_member.register(welcome, ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION))
+@private_rt.message.register(start_private, Command('start'))
 
 
 
