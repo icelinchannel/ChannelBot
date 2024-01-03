@@ -33,3 +33,8 @@ async def welcome(event: types.ChatMemberUpdated):
     else:
         await event.answer('Ботам не место в чате!')
         await bot.ban_chat_member(revoke_messages=True, chat_id=event.chat.id, user_id=event.new_chat_member.user.id)
+
+
+async def start_private(command: types.Message):
+    await command.reply('''Приветик👋👋
+здесь ты можешь связаться с админами канала. Просто отправляй сообщения, мы постараемся ответить''')
