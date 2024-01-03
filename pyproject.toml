@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "icelinbot"
-version = "0.1.0"
+version = "0.2.0"
 description = "A bot for managing our chat"
 authors = ["Icelin <icelin_channel@outlook.com>"]
 readme = "README.md"
