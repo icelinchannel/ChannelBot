@@ -7,10 +7,29 @@ from aiogram.filters import ChatMemberUpdatedFilter
 from aiogram.filters.chat_member_updated import JOIN_TRANSITION
 
 import asyncio
+import logging
+import sys
 
 from config import bot, dp, private_rt, group_rt, channel_rt
 from handlers import welcome, start_private
 from filters import PrivateRouterFilter, GroupRouterFilter, ChannelRouterFilter
+
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='[%(asctime)s] #%(levelname)-8s %(filename)s:'
+       '%(lineno)d - %(name)s - %(message)s',
+    style='{',
+    filename='logs/main.log',
+    filemode='a'
+)
+logger = logging.getLogger(__name__)
+
+stderr_handler = logging.StreamHandler()
+stdout_handler = logging.StreamHandler(sys.stdout)
+
+logger.addHandler(stdout_handler)
+logger.addHandler(stderr_handler)
 
 
 private_rt.message.filter(PrivateRouterFilter())

@@ -1,8 +1,30 @@
 from aiogram import types
 from config import bot, WELCOME_IMAGE_LINK
 
+import logging
+import sys
+
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='[%(asctime)s] #%(levelname)-8s %(filename)s:'
+       '%(lineno)d - %(name)s - %(message)s',
+    style='{',
+    filename='logs/main.log',
+    filemode='a'
+)
+logger = logging.getLogger(__name__)
+
+stderr_handler = logging.StreamHandler()
+stdout_handler = logging.StreamHandler(sys.stdout)
+
+logger.addHandler(stdout_handler)
+logger.addHandler(stderr_handler)
+
 
 async def welcome(event: types.ChatMemberUpdated):
+
+    logger.info('Handler works - function started')
 
     if event.new_chat_member.user.is_bot is False:
 
@@ -35,5 +57,8 @@ async def welcome(event: types.ChatMemberUpdated):
 
 
 async def start_private(message: types.Message):
+
+    logger.info('Handler works - function started')
+
     await message.reply('''Приветик👋👋
 здесь ты можешь связаться с админами канала. Просто отправляй сообщения, мы постараемся ответить''')
