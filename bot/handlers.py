@@ -7,11 +7,10 @@ import sys
 
 logging.basicConfig(
     level=logging.DEBUG,
-    format='[%(asctime)s] #%(levelname)-8s %(filename)s:'
-       '%(lineno)d - %(name)s - %(message)s',
-    style='{',
-    filename='logs/main.log',
-    filemode='w'
+    format='''[%(asctime)s] #%(levelname)-8s %(filename)s:
+%(lineno)d - %(name)s - %(message)s''',
+    filename=f'logs/{__name__}.log',
+    filemode='a'
 )
 logger = logging.getLogger(__name__)
 
@@ -24,7 +23,7 @@ logger.addHandler(stderr_handler)
 
 async def welcome(event: types.ChatMemberUpdated):
 
-    logger.info('Handler works - function started')
+    logger.info(f'handler works - welcome function started. User id={event.new_chat_member.user.id} joined group chat')
 
     if event.new_chat_member.user.is_bot is False:
 
@@ -55,10 +54,14 @@ async def welcome(event: types.ChatMemberUpdated):
         await event.answer('Ботам не место в чате!')
         await bot.ban_chat_member(revoke_messages=True, chat_id=event.chat.id, user_id=event.new_chat_member.user.id)
 
+    logger.info('welcome function finished')
+
 
 async def start_private(message: types.Message):
 
-    logger.info('Handler works - function started')
+    logger.info(f'handler works - start_private function started by user id={message.from_user.id}')
 
     await message.reply('''Приветик👋👋
 здесь ты можешь связаться с админами канала. Просто отправляй сообщения, мы постараемся ответить''')
+
+    logger.info('start_private function finished')
