@@ -18,11 +18,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-stderr_handler = logging.StreamHandler()
 stdout_handler = logging.StreamHandler(sys.stdout)
-
 logger.addHandler(stdout_handler)
-logger.addHandler(stderr_handler)
 
 
 class GroupRouterFilter(Filter):
