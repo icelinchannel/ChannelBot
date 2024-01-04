@@ -11,7 +11,7 @@ logging.basicConfig(
        '%(lineno)d - %(name)s - %(message)s',
     style='{',
     filename='logs/main.log',
-    filemode='a'
+    filemode='w'
 )
 logger = logging.getLogger(__name__)
 
