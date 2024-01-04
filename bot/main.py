@@ -52,6 +52,7 @@ private_rt.message.register(start_private, Command('start'))
 
 
 async def start():
+    logger.info('Bot was started')
     await dp.start_polling(bot)
 
 
