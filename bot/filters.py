@@ -23,19 +23,19 @@ logger.addHandler(stdout_handler)
 
 
 class GroupRouterFilter(Filter):
-    async def __call__(self, message):
+    async def __call__(self):
         logger.info('GroupRouterFilter was used')
         return F.chat_id == GROUP_ID
 
 
 class ChannelRouterFilter(Filter):
-    async def __call__(self, message):
+    async def __call__(self):
         logger.info('GroupRouterFilter is used')
         return F.chat_id == CHANNEL_ID
 
 
 class PrivateRouterFilter(Filter):
-    async def __call__(self, message):
+    async def __call__(self):
         logger.info('PrivateRouterFilter is used')
         return F.chat_type == ChatType.PRIVATE
 
