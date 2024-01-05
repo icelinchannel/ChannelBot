@@ -5,6 +5,7 @@ from aiogram.enums.chat_type import ChatType
 
 import logging
 import sys
+from typing import Union
 
 from config import CHANNEL_ID, GROUP_ID, bot
 
@@ -22,25 +23,18 @@ stdout_handler = logging.StreamHandler(sys.stdout)
 logger.addHandler(stdout_handler)
 
 
-class GroupRouterFilter(Filter):
-    async def __call__(self, message):
-        logger.info('GroupRouterFilter was used')
-        return F.chat_id == GROUP_ID
+class ChatTypeFilter(Filter):
+    def __init__(self, chat_type: Union[str, list]): # [2]
+        self.chat_type = chat_type
 
-
-class ChannelRouterFilter(Filter):
-    async def __call__(self, message):
-        logger.info('GroupRouterFilter is used')
-        return F.chat_id == CHANNEL_ID
-
-
-class PrivateRouterFilter(Filter):
-    async def __call__(self, message):
-        logger.info('PrivateRouterFilter is used')
-        return F.chat_type == ChatType.PRIVATE
+    async def __call__(self, message: types.Message) -> bool:  # [3]
+        if isinstance(self.chat_type, str):
+            return message.chat.type == self.chat_type
+        else:
+            return message.chat.type in self.chat_type
 
 
 class IsItThisBotFilter(Filter):
     async def __call__(self, event: types.ChatMemberUpdated):
-        logger.info('IsItThisBotFilter is used')
+        logger.info('IsItThisBotFilter was used')
         return event.new_chat_member.user.id == bot.id
