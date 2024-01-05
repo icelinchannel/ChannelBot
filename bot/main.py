@@ -12,7 +12,7 @@ import sys
 
 from config import bot, dp, private_rt, group_rt, channel_rt, owner_rt, GROUP_ID, CHANNEL_ID, OWNER_ID
 from handlers import welcome, start_private
-from filters import ChatTypeFilter, OwnerRouterFilter, PrivateRouterFilter, GroupRouterFilter, ChannelRouterFilter
+from filters import OwnerRouterFilter, PrivateRouterFilter, GroupRouterFilter, ChannelRouterFilter, IsItThisBotFilter
 
 
 logging.basicConfig(
