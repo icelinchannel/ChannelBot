@@ -24,10 +24,10 @@ logger.addHandler(stdout_handler)
 
 
 class ChatTypeFilter(Filter):
-    def __init__(self, chat_type: Union[str, list]): # [2]
+    def __init__(self, chat_type: Union[str, list]):
         self.chat_type = chat_type
 
-    async def __call__(self, message: types.Message) -> bool:  # [3]
+    async def __call__(self, message: types.Message) -> bool:
         if isinstance(self.chat_type, str):
             return message.chat.type == self.chat_type
         else:
