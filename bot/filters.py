@@ -23,25 +23,10 @@ stdout_handler = logging.StreamHandler(sys.stdout)
 logger.addHandler(stdout_handler)
 
 
-class ChatTypeFilter(Filter):
-    def __init__(self, chat_type: Union[str, list]) -> None:
-        self.chat_type = chat_type
-        logger.info('ChatTypeFilter was initialized')
-
-    async def __call__(self, message: types.Message) -> bool:
-
-        logger.info('ChatTypeFilter was used')
-
-        if isinstance(self.chat_type, str):
-            return message.chat.type == self.chat_type
-        else:
-            return message.chat.type in self.chat_type
-
-
 class PrivateRouterFilter(Filter):
     async def __call__(self, message) -> bool:
         logger.info('PrivateRouterFilter was used')
-        return ChatTypeFilter(chat_type=[ChatType.PRIVATE]).__call__(message=message) and message.chat.id != OWNER_ID
+        return message.chat.id != OWNER_ID and message.chat.type == ChatType.PRIVATE
 
 
 class GroupRouterFilter(Filter):
