@@ -10,9 +10,9 @@ import asyncio
 import logging
 import sys
 
-from config import bot, dp, private_rt, group_rt, channel_rt, GROUP_ID, CHANNEL_ID, OWNER_ID
+from config import bot, dp, private_rt, group_rt, channel_rt, owner_rt, GROUP_ID, CHANNEL_ID, OWNER_ID
 from handlers import welcome, start_private
-from filters import ChatTypeFilter
+from filters import ChatTypeFilter, IsItThisBotFilter
 
 
 logging.basicConfig(
@@ -28,15 +28,17 @@ stdout_handler = logging.StreamHandler(sys.stdout)
 logger.addHandler(stdout_handler)
 
 
-private_rt.message.filter(ChatTypeFilter(chat_type=[ChatType.PRIVATE]))
+private_rt.message.filter(ChatTypeFilter(chat_type=[ChatType.PRIVATE]), F.chat_id != OWNER_ID)
 group_rt.message.filter(F.chat_id == GROUP_ID)
 channel_rt.message.filter(F.chat_id == CHANNEL_ID)
+owner_rt.message.filter(F.chat_id == OWNER_ID)
 
-private_rt.chat_member.filter(ChatTypeFilter(chat_type=[ChatType.PRIVATE]))
+private_rt.chat_member.filter(ChatTypeFilter(chat_type=[ChatType.PRIVATE]), F.chat_id != OWNER_ID)
 group_rt.chat_member.filter(F.chat_id == GROUP_ID)
 channel_rt.chat_member.filter(F.chat_id == CHANNEL_ID)
+owner_rt.chat_member.filter(F.chat_id == OWNER_ID)
 
-dp.include_routers(group_rt, private_rt, channel_rt)
+dp.include_routers(group_rt, private_rt, channel_rt, owner_rt)
 
 
 group_rt.chat_member.register(welcome, ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION))

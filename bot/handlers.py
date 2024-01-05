@@ -62,3 +62,8 @@ async def start_private(message: types.Message):
 здесь ты можешь связаться с админами канала. Просто отправляй сообщения, мы постараемся ответить''')
 
     logger.info('start_private function finished')
+
+
+async def copy(message: types.Message):
+
+    await message.copy_to(chat_id=OWNER_ID)
