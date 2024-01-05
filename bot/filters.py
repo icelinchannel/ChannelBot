@@ -7,7 +7,7 @@ import logging
 import sys
 from typing import Union
 
-from config import CHANNEL_ID, GROUP_ID, bot, OWNER_ID
+from config import bot, CHANNEL_ID, GROUP_ID, OWNER_ID
 
 
 logging.basicConfig(
