@@ -10,9 +10,9 @@ import asyncio
 import logging
 import sys
 
-from config import bot, dp, private_rt, group_rt, channel_rt
+from config import bot, dp, private_rt, group_rt, channel_rt, GROUP_ID, CHANNEL_ID
 from handlers import welcome, start_private
-from filters import PrivateRouterFilter, GroupRouterFilter, ChannelRouterFilter
+from filters import ChatTypeFilter, IsItThisBotFilter
 
 
 logging.basicConfig(
@@ -28,13 +28,13 @@ stdout_handler = logging.StreamHandler(sys.stdout)
 logger.addHandler(stdout_handler)
 
 
-private_rt.message.filter(PrivateRouterFilter())
-group_rt.message.filter(GroupRouterFilter())
-channel_rt.message.filter(ChannelRouterFilter())
+private_rt.message.filter(ChatTypeFilter(chat_type=[ChatType.PRIVATE]))
+group_rt.message.filter(F.chat_id == GROUP_ID)
+channel_rt.message.filter(F.chat_id == CHANNEL_ID)
 
-private_rt.chat_member.filter(PrivateRouterFilter())
-group_rt.chat_member.filter(GroupRouterFilter())
-channel_rt.chat_member.filter(ChannelRouterFilter())
+private_rt.chat_member.filter(ChatTypeFilter(chat_type=[ChatType.PRIVATE]))
+group_rt.chat_member.filter(F.chat_id == GROUP_ID)
+channel_rt.chat_member.filter(F.chat_id == CHANNEL_ID)
 
 dp.include_routers(group_rt, private_rt, channel_rt)
 
