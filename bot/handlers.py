@@ -1,9 +1,26 @@
 from aiogram import types
+from config import bot, WELCOME_IMAGE_LINK, OWNER_ID
 
-from config import bot, WELCOME_IMAGE_LINK, GROUP_ID
+import logging
+import sys
+
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='''[%(asctime)s] #%(levelname)-8s %(filename)s:
+%(lineno)d - %(name)s - %(message)s''',
+    filename='logs/handlers.log',
+    filemode='a'
+)
+logger = logging.getLogger(__name__)
+
+stdout_handler = logging.StreamHandler(sys.stdout)
+logger.addHandler(stdout_handler)
 
 
 async def welcome(event: types.ChatMemberUpdated):
+
+    logger.info(f'handler works - welcome function started. User id={event.new_chat_member.user.id} joined group chat')
 
     if event.new_chat_member.user.is_bot is False:
 
@@ -33,3 +50,15 @@ async def welcome(event: types.ChatMemberUpdated):
     else:
         await event.answer('Ботам не место в чате!')
         await bot.ban_chat_member(revoke_messages=True, chat_id=event.chat.id, user_id=event.new_chat_member.user.id)
+
+    logger.info('welcome function finished')
+
+
+async def start_private(message: types.Message):
+
+    logger.info(f'handler works - start_private function started by user id={message.from_user.id}')
+
+    await message.reply('''Приветик👋👋
+здесь ты можешь связаться с админами канала. Просто отправляй сообщения, мы постараемся ответить''')
+
+    logger.info('start_private function finished')

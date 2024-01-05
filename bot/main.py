@@ -7,28 +7,41 @@ from aiogram.filters import ChatMemberUpdatedFilter
 from aiogram.filters.chat_member_updated import JOIN_TRANSITION
 
 import asyncio
+import logging
+import sys
 
-from config import bot, dp, private_rt, group_rt, channel_rt, CHANNEL_ID, GROUP_ID
-from handlers import welcome
-from filters import IsItThisBotFilter, PrivateRouterFilter, GroupRouterFilter, ChannelRouterFilter
+from config import bot, dp, private_rt, group_rt, channel_rt, GROUP_ID, CHANNEL_ID, OWNER_ID
+from handlers import welcome, start_private
+from filters import ChatTypeFilter
 
 
-private_rt.message.filter(PrivateRouterFilter())
-group_rt.message.filter(GroupRouterFilter())
-channel_rt.message.filter(ChannelRouterFilter())
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='''[%(asctime)s] #%(levelname)-8s %(filename)s:
+%(lineno)d - %(name)s - %(message)s''',
+    filename='logs/main.log',
+    filemode='a'
+)
+logger = logging.getLogger(__name__)
 
-private_rt.channel_post.filter(PrivateRouterFilter())
-group_rt.channel_post.filter(GroupRouterFilter())
-channel_rt.channel_post.filter(ChannelRouterFilter())
+stdout_handler = logging.StreamHandler(sys.stdout)
+logger.addHandler(stdout_handler)
 
-private_rt.chat_member.filter(PrivateRouterFilter())
-group_rt.chat_member.filter(GroupRouterFilter())
-channel_rt.chat_member.filter(ChannelRouterFilter())
+
+private_rt.message.filter(ChatTypeFilter(chat_type=[ChatType.PRIVATE]))
+group_rt.message.filter(F.chat_id == GROUP_ID)
+channel_rt.message.filter(F.chat_id == CHANNEL_ID)
+
+private_rt.chat_member.filter(ChatTypeFilter(chat_type=[ChatType.PRIVATE]))
+group_rt.chat_member.filter(F.chat_id == GROUP_ID)
+channel_rt.chat_member.filter(F.chat_id == CHANNEL_ID)
 
 dp.include_routers(group_rt, private_rt, channel_rt)
 
 
 group_rt.chat_member.register(welcome, ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION))
+private_rt.message.register(start_private, Command('start'))
+
 
 
 async def start():

@@ -12,3 +12,7 @@ start:
 	poetry update package
 	clear
 	poetry run python bot/main.py
+
+lint:
+	clear
+	poetry run flake8 bot
