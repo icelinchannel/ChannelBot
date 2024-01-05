@@ -1,4 +1,4 @@
-from aiogram import F, types
+from aiogram import types
 
 from aiogram.filters.base import Filter
 from aiogram.enums.chat_type import ChatType
@@ -7,7 +7,7 @@ import logging
 import sys
 from typing import Union
 
-from config import CHANNEL_ID, GROUP_ID, bot
+from config import CHANNEL_ID, GROUP_ID, bot, OWNER_ID
 
 
 logging.basicConfig(
@@ -32,6 +32,26 @@ class ChatTypeFilter(Filter):
             return message.chat.type == self.chat_type
         else:
             return message.chat.type in self.chat_type
+
+
+class PrivateRouterFilter(Filter):
+    async def __call__(self, message):
+        return ChatTypeFilter(chat_type=[ChatType.PRIVATE]) and message.chat.id != OWNER_ID
+
+
+class GroupRouterFilter(Filter):
+    async def __call__(self, message):
+        return message.chat.id == GROUP_ID
+
+
+class ChannelRouterFilter(Filter):
+    async def __call__(self, message):
+        return message.chat.id == CHANNEL_ID
+
+
+class OwnerRouterFilter(Filter):
+    async def __call__(self, message):
+        return message.chat.id == OWNER_ID
 
 
 class IsItThisBotFilter(Filter):
