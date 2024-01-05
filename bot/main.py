@@ -11,7 +11,7 @@ import logging
 import sys
 
 from config import bot, dp, private_rt, group_rt, channel_rt, owner_rt, GROUP_ID, CHANNEL_ID, OWNER_ID
-from handlers import welcome, start_private
+from handlers import welcome, start_private, start_group
 from filters import OwnerRouterFilter, PrivateRouterFilter, GroupRouterFilter, ChannelRouterFilter, IsItThisBotFilter
 
 
@@ -43,6 +43,7 @@ dp.include_routers(group_rt, private_rt, channel_rt, owner_rt)
 
 group_rt.chat_member.register(welcome, ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION))
 private_rt.message.register(start_private, Command('start'))
+group_rt.message.register(start_group, Command('start'))
 
 
 async def start():
