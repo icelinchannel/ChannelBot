@@ -64,6 +64,13 @@ async def start_private(message: types.Message):
     logger.info('start_private function finished')
 
 
+async def start_group(message: types.Message):
+
+    logger.info(f'handler works - start_group function started by user id={message.from_user.id}')
+
+    await message.delete()
+
+
 async def copy(message: types.Message):
 
     await message.copy_to(chat_id=OWNER_ID)
