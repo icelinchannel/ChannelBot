@@ -19,7 +19,7 @@ logging.basicConfig(
     level=logging.DEBUG,
     format='''[%(asctime)s] #%(levelname)-8s %(filename)s:
 %(lineno)d - %(name)s - %(message)s''',
-    filename=f'logs/{__name__}.log',
+    filename='logs/main.log',
     filemode='a'
 )
 logger = logging.getLogger(__name__)
@@ -49,7 +49,6 @@ private_rt.message.register(start_private, Command('start'))
 
 
 async def start():
-    logger.info('Bot was started')
     await dp.start_polling(bot)
 
 

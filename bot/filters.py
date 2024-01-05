@@ -13,7 +13,7 @@ logging.basicConfig(
     level=logging.DEBUG,
     format='''[%(asctime)s] #%(levelname)-8s %(filename)s:
 %(lineno)d - %(name)s - %(message)s''',
-    filename=f'logs/{__name__}.log',
+    filename='logs/filters.log',
     filemode='a'
 )
 logger = logging.getLogger(__name__)
