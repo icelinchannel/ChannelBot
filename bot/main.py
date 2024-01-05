@@ -45,7 +45,6 @@ group_rt.chat_member.register(welcome, ChatMemberUpdatedFilter(member_status_cha
 private_rt.message.register(start_private, Command('start'))
 
 
-
 async def start():
     await dp.start_polling(bot)
 
