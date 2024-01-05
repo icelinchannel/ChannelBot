@@ -28,12 +28,12 @@ stdout_handler = logging.StreamHandler(sys.stdout)
 logger.addHandler(stdout_handler)
 
 
-private_rt.message.filter(ChatTypeFilter(chat_type=[ChatType.PRIVATE]), F.chat_id != OWNER_ID)
+private_rt.message.filter(ChatTypeFilter(chat_type=[ChatType.PRIVATE]))
 group_rt.message.filter(F.chat_id == GROUP_ID)
 channel_rt.message.filter(F.chat_id == CHANNEL_ID)
 owner_rt.message.filter(F.chat_id == OWNER_ID)
 
-private_rt.chat_member.filter(ChatTypeFilter(chat_type=[ChatType.PRIVATE]), F.chat_id != OWNER_ID)
+private_rt.chat_member.filter(ChatTypeFilter(chat_type=[ChatType.PRIVATE]))
 group_rt.chat_member.filter(F.chat_id == GROUP_ID)
 channel_rt.chat_member.filter(F.chat_id == CHANNEL_ID)
 owner_rt.chat_member.filter(F.chat_id == OWNER_ID)
