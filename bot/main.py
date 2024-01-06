@@ -16,7 +16,7 @@ from filters import OwnerRouterFilter, PrivateRouterFilter, GroupRouterFilter, C
 
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.WARNING,
     format='''[%(asctime)s] #%(levelname)-8s %(filename)s:
 %(lineno)d - %(name)s - %(message)s''',
     filename='logs/main.log',
