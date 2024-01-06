@@ -1,4 +1,4 @@
-from aiogram import F, types
+from aiogram import types
 
 from aiogram.filters.base import Filter
 from aiogram.enums.chat_type import ChatType
@@ -7,11 +7,11 @@ import logging
 import sys
 from typing import Union
 
-from config import CHANNEL_ID, GROUP_ID, bot
+from config import bot, CHANNEL_ID, GROUP_ID, OWNER_ID
 
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.WARNING,
     format='''[%(asctime)s] #%(levelname)-8s %(filename)s:
 %(lineno)d - %(name)s - %(message)s''',
     filename='logs/filters.log',
@@ -23,18 +23,37 @@ stdout_handler = logging.StreamHandler(sys.stdout)
 logger.addHandler(stdout_handler)
 
 
-class ChatTypeFilter(Filter):
-    def __init__(self, chat_type: Union[str, list]):
-        self.chat_type = chat_type
+class PrivateRouterFilter(Filter):
+    async def __call__(self, message) -> bool:
+        logger.info(f'PrivateRouterFilter was used - returned {message.chat.id != OWNER_ID and message.chat.type == ChatType.PRIVATE}')
+        logger.debug(f'''Chat ID: {int(str(message.chat.id)[4:])}
+Chat type: {message.chat.type}''')
+        return int(str(message.chat.id)[4:]) != OWNER_ID and message.chat.type == ChatType.PRIVATE
 
-    async def __call__(self, message: types.Message) -> bool:
-        if isinstance(self.chat_type, str):
-            return message.chat.type == self.chat_type
-        else:
-            return message.chat.type in self.chat_type
+
+class GroupRouterFilter(Filter):
+    async def __call__(self, message) -> bool:
+        logger.info(f'GroupRouterFilter was used - returned {message.chat.id == GROUP_ID}')
+        logger.debug(f'Chat ID: {int(str(message.chat.id)[4:])}')
+        return int(str(message.chat.id)[4:]) == GROUP_ID
+
+
+class ChannelRouterFilter(Filter):
+    async def __call__(self, message) -> bool:
+        logger.info(f'ChannelRouterFilter was used - returned {message.chat.id == CHANNEL_ID}')
+        logger.debug(f'Chat ID: {int(str(message.chat.id)[4:])}')
+        return int(str(message.chat.id)[4:]) == CHANNEL_ID
+
+
+class OwnerRouterFilter(Filter):
+    async def __call__(self, message) -> bool:
+        logger.info(f'OwnerRouterFilter was used - returned {message.chat.id == OWNER_ID}')
+        logger.debug(f'Chat ID: {int(str(message.chat.id)[4:])}')
+        return int(str(message.chat.id)[4:]) == OWNER_ID
 
 
 class IsItThisBotFilter(Filter):
-    async def __call__(self, event: types.ChatMemberUpdated):
-        logger.info('IsItThisBotFilter was used')
+    async def __call__(self, event: types.ChatMemberUpdated) -> bool:
+        logger.info(f'IsItThisBotFilter was used - returned {event.new_chat_member.user.id == bot.id}')
+        logger.debug(f'New user ID: {event.new_chat_member.user.id}')
         return event.new_chat_member.user.id == bot.id

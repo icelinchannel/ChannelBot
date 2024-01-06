@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "icelinbot"
-version = "0.2.0"
-description = "A bot for managing our chat"
+version = "0.3.1"
+description = "A bot for managing my channel and its group for comments"
 authors = ["Icelin <icelin_channel@outlook.com>"]
 readme = "README.md"
 
@@ -9,7 +9,7 @@ readme = "README.md"
 python = "^3.11"
 python-dotenv = "^1.0.0"
 flake8 = "^6.1.0"
-aiogram = "3.0.0"
+aiogram = "3.2.0"
 
 
 [build-system]

@@ -6,7 +6,7 @@ import sys
 
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.WARNING,
     format='''[%(asctime)s] #%(levelname)-8s %(filename)s:
 %(lineno)d - %(name)s - %(message)s''',
     filename='logs/handlers.log',
@@ -62,3 +62,10 @@ async def start_private(message: types.Message):
 здесь ты можешь связаться с админами канала. Просто отправляй сообщения, мы постараемся ответить''')
 
     logger.info('start_private function finished')
+
+
+async def start_group(message: types.Message):
+
+    logger.info(f'handler works - start_group function started by user id={message.from_user.id}')
+
+    await message.delete()
