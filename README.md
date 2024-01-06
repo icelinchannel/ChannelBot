@@ -37,3 +37,8 @@ Start project:
 make start
 ```
 <br>
+
+Lint the project
+```shell
+make lint
+```
