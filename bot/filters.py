@@ -26,28 +26,34 @@ logger.addHandler(stdout_handler)
 class PrivateRouterFilter(Filter):
     async def __call__(self, message) -> bool:
         logger.info('PrivateRouterFilter was used')
+        logger.debug(f'''Chat ID: {message.chat.id}
+Chat type: {message.chat.type}''')
         return message.chat.id != OWNER_ID and message.chat.type == ChatType.PRIVATE
 
 
 class GroupRouterFilter(Filter):
     async def __call__(self, message) -> bool:
         logger.info('GroupRouterFilter was used')
+        logger.debug(f'Chat ID: {message.chat.id}')
         return message.chat.id == GROUP_ID
 
 
 class ChannelRouterFilter(Filter):
     async def __call__(self, message) -> bool:
         logger.info('ChannelRouterFilter was used')
+        logger.debug(f'Chat ID: {message.chat.id}')
         return message.chat.id == CHANNEL_ID
 
 
 class OwnerRouterFilter(Filter):
     async def __call__(self, message) -> bool:
         logger.info('OwnerRouterFilter was used')
+        logger.debug(f'Chat ID: {message.chat.id}')
         return message.chat.id == OWNER_ID
 
 
 class IsItThisBotFilter(Filter):
     async def __call__(self, event: types.ChatMemberUpdated) -> bool:
         logger.info('IsItThisBotFilter was used')
+        logger.debug(f'New user ID: {event.new_chat_member.user.id}')
         return event.new_chat_member.user.id == bot.id
