@@ -73,4 +73,4 @@ async def start_group(message: types.Message):
 
 async def copy(message: types.Message):
 
-    await message.copy_to(chat_id=OWNER_ID)
+    await message.forward(chat_id=OWNER_ID)
