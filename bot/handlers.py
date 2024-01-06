@@ -6,7 +6,7 @@ import sys
 
 
 logging.basicConfig(
-    level=logging.WARNING,
+    level=logging.DEBUG,
     format='''[%(asctime)s] #%(levelname)-8s %(filename)s:
 %(lineno)d - %(name)s - %(message)s''',
     filename='logs/handlers.log',
@@ -69,3 +69,8 @@ async def start_group(message: types.Message):
     logger.info(f'handler works - start_group function started by user id={message.from_user.id}')
 
     await message.delete()
+
+
+async def copy(message: types.Message):
+
+    await message.forward(chat_id=OWNER_ID)

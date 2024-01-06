@@ -11,7 +11,7 @@ from config import bot, CHANNEL_ID, GROUP_ID, OWNER_ID
 
 
 logging.basicConfig(
-    level=logging.WARNING,
+    level=logging.DEBUG,
     format='''[%(asctime)s] #%(levelname)-8s %(filename)s:
 %(lineno)d - %(name)s - %(message)s''',
     filename='logs/filters.log',

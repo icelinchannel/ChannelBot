@@ -16,7 +16,7 @@ from filters import OwnerRouterFilter, PrivateRouterFilter, GroupRouterFilter, C
 
 
 logging.basicConfig(
-    level=logging.WARNING,
+    level=logging.DEBUG,
     format='''[%(asctime)s] #%(levelname)-8s %(filename)s:
 %(lineno)d - %(name)s - %(message)s''',
     filename='logs/main.log',
@@ -44,6 +44,8 @@ dp.include_routers(group_rt, private_rt, channel_rt, owner_rt)
 group_rt.chat_member.register(welcome, ChatMemberUpdatedFilter(member_status_changed=JOIN_TRANSITION))
 group_rt.message.register(start_group, Command('start'))
 private_rt.message.register(start_private, Command('start'))
+private_rt.message.register(copy)
+private_rt.edited_message.register(copy)
 
 
 async def start():
