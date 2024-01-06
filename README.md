@@ -42,3 +42,8 @@ Lint the project
 ```shell
 make lint
 ```
+
+Add constants to .env file
+```shell
+make add-constants
+```
