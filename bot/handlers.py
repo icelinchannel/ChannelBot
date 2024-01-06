@@ -69,8 +69,3 @@ async def start_group(message: types.Message):
     logger.info(f'handler works - start_group function started by user id={message.from_user.id}')
 
     await message.delete()
-
-
-async def copy(message: types.Message):
-
-    await message.forward(chat_id=OWNER_ID)
