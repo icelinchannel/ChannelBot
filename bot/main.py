@@ -28,15 +28,15 @@ stdout_handler = logging.StreamHandler(sys.stdout)
 logger.addHandler(stdout_handler)
 
 
+owner_rt.message.filter(OwnerRouterFilter())
 private_rt.message.filter(PrivateRouterFilter())
 group_rt.message.filter(GroupRouterFilter())
 channel_rt.message.filter(ChannelRouterFilter())
-owner_rt.message.filter(OwnerRouterFilter())
 
+owner_rt.chat_member.filter(OwnerRouterFilter())
 private_rt.chat_member.filter(PrivateRouterFilter())
 group_rt.chat_member.filter(GroupRouterFilter())
 channel_rt.chat_member.filter(ChannelRouterFilter())
-owner_rt.chat_member.filter(OwnerRouterFilter())
 
 dp.include_routers(group_rt, private_rt, channel_rt, owner_rt)
 
