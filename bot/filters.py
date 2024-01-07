@@ -25,10 +25,10 @@ logger.addHandler(stdout_handler)
 
 class PrivateRouterFilter(Filter):
     async def __call__(self, message) -> bool:
-        logger.info(f'PrivateRouterFilter was used - returned {int(str(message.chat.id)[4:]) != OWNER_ID and message.chat.type == ChatType.PRIVATE}')
-        logger.debug(f'''Chat ID: {int(str(message.chat.id)[4:])}
+        logger.info(f'PrivateRouterFilter was used - returned {message.chat.id != OWNER_ID and message.chat.type == ChatType.PRIVATE}')
+        logger.debug(f'''Chat ID: {message.chat.id}
 Chat type: {message.chat.type}''')
-        return int(str(message.chat.id)[4:]) != OWNER_ID and message.chat.type == ChatType.PRIVATE
+        return message.chat.id != OWNER_ID and message.chat.type == ChatType.PRIVATE
 
 
 class GroupRouterFilter(Filter):
@@ -47,9 +47,9 @@ class ChannelRouterFilter(Filter):
 
 class OwnerRouterFilter(Filter):
     async def __call__(self, message) -> bool:
-        logger.info(f'OwnerRouterFilter was used - returned {int(str(message.chat.id)[4:]) == OWNER_ID}')
-        logger.debug(f'Chat ID: {int(str(message.chat.id)[4:])}')
-        return int(str(message.chat.id)[4:]) == OWNER_ID
+        logger.info(f'OwnerRouterFilter was used - returned {message.chat.id == OWNER_ID}')
+        logger.debug(f'Chat ID: {message.chat.id}')
+        return message.chat.id == OWNER_ID
 
 
 class IsItThisBotFilter(Filter):
