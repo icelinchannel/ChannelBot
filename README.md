@@ -58,7 +58,7 @@ make add-constants
 
 2. First, you need to create your bot's account via [BotFather](https://t.me/BotFather). Also, you can customize it there
 
-3. Next, you need to choose a service for deploying. You can use something like [Railway](https://railway.app/), [Heroku](https://www.heroku.com/) or [Render](https://render.com/). You should start a new web service there
+3. Next, you need to choose a service for deploying. You can use something like [Railway](https://railway.app/), [Heroku](https://www.heroku.com/) or [Render](https://render.com/). Start a new web service there, build it from this repository: https://github.com/icelinchannel/ChannelBot
 
 4. Add built command - `make install`, and start command - `make start`
 
